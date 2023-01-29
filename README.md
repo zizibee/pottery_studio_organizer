@@ -1,10 +1,31 @@
-# My Personal Project
+# *My Personal Project:* Pottery Studio Organizer 
 
-## A subtitle
+## Functionality ##
+This application would keep track of pottery projects, 
+documenting their title/creator, clay type, current status, 
+and the next step in production. Projects could be added and
+removed to a collection of in-progress pieces that could be 
+organized by clay type and status to group projects that can 
+be fired together. Users would be able to select a project 
+and get a status report listing its current status and the 
+next step to complete. Users could update a project's status 
+after finishing a step. Once a project is complete, the piece 
+would be added to a collection of completed works. Users could
+view the lists of in-progress and completed pieces.
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+## Users
+This program could be used by:
+- **Artists** - to keep track and organize their projects
+- **Pottery teachers** - to keep track and complete students' 
+projects
+- **Studio owners** - to keep track of artists' projects and 
+organize kiln firings
 
-An example of text with **bold** and *italic* fonts.  
+## Interest
+This project is of interest to me because I have loved taking
+ceramics courses in school but always wondered how my teachers
+could organize and keep track of the many projects students 
+were making and what pieces could be fired together. I am 
+interested in creating an application that could make this 
+process easier and could be of use to individual artists and 
+studios too. 
