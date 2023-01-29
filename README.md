@@ -29,3 +29,16 @@ were making and what pieces could be fired together. I am
 interested in creating an application that could make this 
 process easier and could be of use to individual artists and 
 studios too. 
+
+## User Stories
+- As a user, I want to be able to add, or remove, a project 
+to a list of other in-progress pieces.
+- As a user, I want to be able to see a status report for a 
+project in my collection.
+- As a user, I want to be able to receive a report of which 
+projects in my collection can be fired together based on their
+clay type and status.
+- As a user, I want to be able to update the status of a project 
+and move a finished project to a collection of completed pieces.
+- As a user, I want to be able to view my lists of in-progress
+and completed projects. 
