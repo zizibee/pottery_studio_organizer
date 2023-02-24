@@ -37,8 +37,16 @@ public class CeramicProjectList {
         return null;
     }
 
+    // EFFECTS: return project in list at given index or null if index is >= list size
+    public CeramicProject getProjectFromIndex(int i) {
+        if (i >= ceramicProjectList.size()) {
+            return null;
+        }
+        return ceramicProjectList.get(i);
+    }
+
     // EFFECTS: returns project in list with given title or null if it does not exist
-    public CeramicProject getProject(String title) {
+    public CeramicProject getProjectFromTitle(String title) {
         for (int i = 0; i < ceramicProjectList.size(); i++) {
             CeramicProject c = ceramicProjectList.get(i);
             if (c.getTitle().equals(title)) {
@@ -59,5 +67,9 @@ public class CeramicProjectList {
             }
         }
         return group;
+    }
+
+    public int length() {
+        return ceramicProjectList.size();
     }
 }
