@@ -14,7 +14,6 @@ class CeramicProjectTest {
     void setUp() {
         testProject = new CeramicProject("test", "stoneware", "greenware");
         testProjectBisque = new CeramicProject("test e", "earthenware", "bisqueware");
-
     }
 
     @Test
