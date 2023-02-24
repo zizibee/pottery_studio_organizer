@@ -56,6 +56,15 @@ class CeramicProjectTest {
     }
 
     @Test
+    void testUpdatePostGlaze() {
+        CeramicProject testProjectPostGlaze = new CeramicProject("test p", "porcelain",
+                "glazeware");
+        testProjectPostGlaze.update();
+        assertEquals("glazeware", testProjectPostGlaze.getStatus());
+        assertEquals("post-glaze work", testProjectPostGlaze.getNextStep());
+    }
+
+    @Test
     void testFinish() {
         testProject.finish();
         assertEquals("COMPLETE", testProject.getNextStep());

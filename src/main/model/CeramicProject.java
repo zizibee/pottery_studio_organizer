@@ -16,9 +16,9 @@ public class CeramicProject {
         this.clayType = clayType;
         this.status = status;
         String n;
-        if (status == "greenware") {
+        if (status.equals("greenware")) {
             n = "bisque fire";
-        } else if (status == "bisqueware") {
+        } else if (status.equals("bisqueware")) {
             n = "glaze fire";
         } else {
             n = "post-glaze work";
