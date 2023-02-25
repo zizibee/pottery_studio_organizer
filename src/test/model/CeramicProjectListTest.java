@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests for CeramicProjectList class
 public class CeramicProjectListTest {
     private CeramicProjectList testList;
     private CeramicProject testProjectOne = new CeramicProject("test 1", "porcelain",

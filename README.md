@@ -2,12 +2,12 @@
 
 ## Functionality ##
 This application would keep track of pottery projects, 
-documenting their title/creator, clay type, current status, 
+documenting their title/creator, clay type, current clay stage, 
 and the next step in production. Projects could be added and
 removed to a collection of in-progress pieces that could be 
 organized by clay type and status to group projects that can 
 be fired together. Users would be able to select a project 
-and get a status report listing its current status and the 
+and get a status report listing its current stage and the 
 next step to complete. Users could update a project's status 
 after finishing a step. Once a project is complete, the piece 
 would be added to a collection of completed works. Users could
@@ -37,7 +37,7 @@ to a list of other in-progress pieces.
 project in my collection.
 - As a user, I want to be able to receive a report of which 
 projects in my collection can be fired together based on their
-clay type and status.
+clay type and stage.
 - As a user, I want to be able to update the status of a project 
 and move a finished project to a collection of completed pieces.
 - As a user, I want to be able to view my lists of in-progress

@@ -69,6 +69,7 @@ public class CeramicProjectList {
         return group;
     }
 
+    // EFFECTS: return size of list
     public int length() {
         return ceramicProjectList.size();
     }
