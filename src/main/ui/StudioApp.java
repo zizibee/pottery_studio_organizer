@@ -202,9 +202,9 @@ public class StudioApp {
         System.out.println("\nSelect an action:");
 
         while (!(selection.equals("c") || selection.equals("f") || selection.equals("m"))) {
-            System.out.print("c -> complete next step");
-            System.out.print("f -> move project to finished collection");
-            System.out.print("m -> return to menu");
+            System.out.print("\tc -> complete next step");
+            System.out.print("\n\tf -> move project to finished collection");
+            System.out.print("\n\tm -> return to menu\n");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -233,8 +233,8 @@ public class StudioApp {
         String selection = "";
 
         while (!(selection.equals("i") || selection.equals("f"))) {
-            System.out.print("i -> in-progress project collection");
-            System.out.print("f -> finished project collection");
+            System.out.print("\ti -> in-progress project collection");
+            System.out.print("\n\tf -> finished project collection\n");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -252,9 +252,9 @@ public class StudioApp {
         System.out.println("\nSelect a clay type:");
 
         while (!(selection.equals("e") || selection.equals("s") || selection.equals("p"))) {
-            System.out.print("e -> earthenware");
-            System.out.print("s -> stoneware");
-            System.out.print("p -> porcelain");
+            System.out.print("\te -> earthenware");
+            System.out.print("\n\ts -> stoneware");
+            System.out.print("\n\tp -> porcelain\n");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -274,9 +274,9 @@ public class StudioApp {
         System.out.println("\nSelect a clay status:");
 
         while (!(selection.equals("g") || selection.equals("b") || selection.equals("z"))) {
-            System.out.print("g -> greenware");
-            System.out.print("b -> bisqueware");
-            System.out.print("z -> glazeware");
+            System.out.print("\tg -> greenware");
+            System.out.print("\n\tb -> bisqueware");
+            System.out.print("\n\tz -> glazeware\n");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -296,8 +296,8 @@ public class StudioApp {
         System.out.println("\nSelect a firing step:");
 
         while (!(selection.equals("b") || selection.equals("g"))) {
-            System.out.print("b -> bisque fire");
-            System.out.print("g -> glaze fire");
+            System.out.print("\tb -> bisque fire");
+            System.out.print("\n\tg -> glaze fire\n");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -311,8 +311,8 @@ public class StudioApp {
 
     // EFFECTS: print title, clay type, status, and next step for given project
     private void printProjectReport(CeramicProject c) {
-        System.out.println("\nProject " + c.getTitle() + " has clay type " + c.getClayType() + " and status "
+        System.out.println("\nProject \"" + c.getTitle() + "\" has clay type " + c.getClayType() + " and status "
                 + c.getStatus() + ".");
-        System.out.println("\t Next step to complete is: " + c.getNextStep() + ".");
+        System.out.println("Next step to complete is: " + c.getNextStep() + ".");
     }
 }
