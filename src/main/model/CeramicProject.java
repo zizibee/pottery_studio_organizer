@@ -26,13 +26,6 @@ public class CeramicProject {
         this.nextStep = n;
     }
 
-    /*
-    // EFFECTS: print out fields of project
-    public void statusReport() {
-        System.out.println("Project " + title + " has clay type " + clayType + " and status " + status + ".");
-        System.out.println("\t Next step to complete is: " + nextStep + ".");
-    } */
-
     // REQUIRES: next step must be either "bisque fire" or "glaze fire"
     // MODIFIES: this
     // EFFECTS: change status and next step according to initial next step
