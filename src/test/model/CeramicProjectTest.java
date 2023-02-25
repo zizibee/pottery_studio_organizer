@@ -61,12 +61,12 @@ class CeramicProjectTest {
                 "glazeware");
         testProjectPostGlaze.update();
         assertEquals("glazeware", testProjectPostGlaze.getStatus());
-        assertEquals("post-glaze work", testProjectPostGlaze.getNextStep());
+        assertEquals("NONE - FINISHED", testProjectPostGlaze.getNextStep());
     }
 
     @Test
     void testFinish() {
         testProject.finish();
-        assertEquals("COMPLETE", testProject.getNextStep());
+        assertEquals("NONE - FINISHED", testProject.getNextStep());
     }
 }

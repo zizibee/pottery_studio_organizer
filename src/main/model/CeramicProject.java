@@ -2,8 +2,8 @@ package model;
 
 // Represents a ceramic project with a title, clay type, current status and next step to complete
 public class CeramicProject {
-    private String title;
-    private String clayType;
+    private final String title;
+    private final String clayType;
     private String status;
     private String nextStep;
 
@@ -26,11 +26,11 @@ public class CeramicProject {
         this.nextStep = n;
     }
 
-    // REQUIRES: next step must be either "bisque fire" or "glaze fire"
     // MODIFIES: this
     // EFFECTS: change status and next step according to initial next step
     //          if step is bisque fire, change status to bisqueware and next step to glaze fire
     //          if step is glaze fire, change status to glazeware and next step to post-glaze work
+    //          if step is post-glaze work, change next step to none and finished
     public void update() {
         if (nextStep.equals("bisque fire")) {
             this.status = "bisqueware";
@@ -38,13 +38,15 @@ public class CeramicProject {
         } else if (nextStep.equals("glaze fire")) {
             this.status = "glazeware";
             this.nextStep = "post-glaze work";
+        } else {
+            finish();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: changes next step field to completed
     public void finish() {
-        this.nextStep = "COMPLETE";
+        this.nextStep = "NONE - FINISHED";
     }
 
     public String getTitle() {

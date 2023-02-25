@@ -21,7 +21,7 @@ public class StudioApp {
     //          if q is selected, end application and print goodbye message
     private void runStudio() {
         boolean keepRunning = true;
-        String userInput = null;
+        String userInput;
 
         init();
         System.out.println("\nWelcome to your pottery studio organizer!");
@@ -44,20 +44,28 @@ public class StudioApp {
     // MODIFIES: this
     // EFFECTS: calls appropriate methods for user input based on menu legend
     private void processInput(String userInput) {
-        if (userInput.equals("a")) {
-            addProject();
-        } else if (userInput.equals("r")) {
-            removeProject();
-        } else if (userInput.equals("s")) {
-            statusReport();
-        } else if (userInput.equals("g")) {
-            groupFiringSuggestion();
-        } else if (userInput.equals("u")) {
-            updateProject();
-        } else if (userInput.equals("v")) {
-            viewProjects();
-        } else {
-            System.out.println("Invalid selection.");
+        switch (userInput) {
+            case "a":
+                addProject();
+                break;
+            case "r":
+                removeProject();
+                break;
+            case "s":
+                statusReport();
+                break;
+            case "g":
+                groupFiringSuggestion();
+                break;
+            case "u":
+                updateProject();
+                break;
+            case "v":
+                viewProjects();
+                break;
+            default:
+                System.out.println("Invalid selection.");
+                break;
         }
     }
 
@@ -86,8 +94,7 @@ public class StudioApp {
     // EFFECTS: create and add new project to chosen list and print confirmation message,
     //          if project cannot be added, print message to indicate failure
     private void addProject() {
-        System.out.print("Enter the title of this new project: ");
-        String title = input.next();
+        String title = enterTitle();
 
         String selectedClayType = selectClayType();
         String selectedStatus = selectStatus();
@@ -110,6 +117,9 @@ public class StudioApp {
         } else {
             System.out.println("Project \"" + title + "\" has been added to the " + listMessage
                     + " project collection.");
+            if (selectedList == finishedProjects) {
+                newProject.finish();
+            }
         }
     }
 
@@ -124,8 +134,7 @@ public class StudioApp {
         } else {
             listMessage = "finished";
         }
-        System.out.print("Enter the title of project to remove: ");
-        String title = input.next();
+        String title = enterTitle();
 
         ArrayList<CeramicProject> editedList = selectedList.removeProject(title);
         if (editedList == null) {
@@ -139,24 +148,22 @@ public class StudioApp {
 
     // EFFECTS: allow title to be entered by user, print status report of project and return project,
     //          if project cannot be found, print failure message
-    private CeramicProject statusReport() {
-        System.out.print("Enter the title of project to view: ");
-        String title = input.next();
+    private void statusReport() {
+        String title = enterTitle();
 
         CeramicProject found = inProgressProjects.getProjectFromTitle(title);
         if (found == null) {
             found = finishedProjects.getProjectFromTitle(title);
             if (found == null) {
                 System.out.println("Project not found.");
-                return null;
+                return;
             }
         }
         printProjectReport(found);
-        return found;
     }
 
     // EFFECTS: allow user to select clay type and next step, group projects in in-progress list matching chosen fields,
-    //          and print list of grouped projects
+    //          and print list of grouped projects, if none print indicating message
     private void groupFiringSuggestion() {
         String selectedClayType = selectClayType();
         String selectedNextStep = selectNextStep();
@@ -165,8 +172,12 @@ public class StudioApp {
 
         System.out.println("\nIn-progress " + selectedClayType + " projects that can be "
                 + selectedNextStep + "d together:");
-        for (int i = 0; i < firingGroup.size(); i++) {
-            System.out.println("\t- " + firingGroup.get(i).getTitle());
+        if (firingGroup.size() == 0) {
+            System.out.println("\tNONE");
+            return;
+        }
+        for (CeramicProject ceramicProject : firingGroup) {
+            System.out.println("\t- " + ceramicProject.getTitle());
         }
     }
 
@@ -175,12 +186,11 @@ public class StudioApp {
     //          allow user to select action: if c, update project and print status report
     //                                       if f, finish project and move to finished list, remove from in-progress
     private void updateProject() {
-        System.out.print("Enter the title of project to update: ");
-        String title = input.next();
+        String title = enterTitle();
 
         CeramicProject found = inProgressProjects.getProjectFromTitle(title);
         if (found == null) {
-            System.out.println("Project not found.");
+            System.out.println("Project not found in in-progress project collection.");
             return;
         }
         printProjectReport(found);
@@ -188,12 +198,15 @@ public class StudioApp {
         String selectedAction = selectAction();
         if (selectedAction.equals("c")) {
             found.update();
-            printProjectReport(found);
         } else if (selectedAction.equals("f")) {
             found.finish();
+        }
+
+        if (found.getNextStep().equals("NONE - FINISHED")) {
             finishedProjects.addProject(found);
             inProgressProjects.removeProject(found.getTitle());
         }
+        printProjectReport(found);
     }
 
     // EFFECTS: allow user to select either c, f, or m and return selection
@@ -221,7 +234,10 @@ public class StudioApp {
             message = "Finished";
         }
         System.out.println("\n" + message + " projects:");
-
+        if (selected.length() == 0) {
+            System.out.println("\tNONE");
+            return;
+        }
         for (int i = 0; i < selected.length(); i++) {
             printProjectReport(selected.getProjectFromIndex(i));
         }
@@ -244,6 +260,11 @@ public class StudioApp {
         } else {
             return finishedProjects;
         }
+    }
+
+    private String enterTitle() {
+        System.out.print("Enter the title of this new project: ");
+        return input.next();
     }
 
     // EFFECTS: allow user to select either e - return "earthenware", s - return "stoneware", or p - return "porcelain"
@@ -311,8 +332,8 @@ public class StudioApp {
 
     // EFFECTS: print title, clay type, status, and next step for given project
     private void printProjectReport(CeramicProject c) {
-        System.out.println("\nProject \"" + c.getTitle() + "\" has clay type " + c.getClayType() + " and status "
+        System.out.println("\n\tProject \"" + c.getTitle() + "\" has clay type " + c.getClayType() + " and status "
                 + c.getStatus() + ".");
-        System.out.println("Next step to complete is: " + c.getNextStep() + ".");
+        System.out.println("\tNext step to complete is: " + c.getNextStep() + ".");
     }
 }
