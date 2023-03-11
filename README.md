@@ -12,6 +12,9 @@ next step to complete. Users could update a project's status
 after finishing a step. Once a project is complete, the piece 
 would be added to a collection of completed works. Users could
 view the lists of in-progress and completed pieces.
+Before quitting, users could choose whether to save
+their project collections and choose to load these projects from file
+when restarting the application.
 
 ## Users
 This program could be used by:
@@ -41,4 +44,6 @@ clay type and stage.
 - As a user, I want to be able to update the status of a project 
 and move a finished project to a collection of completed pieces.
 - As a user, I want to be able to view my lists of in-progress
-and completed projects. 
+and completed projects.
+- As a user, I want to be prompted with the option of saving my project collections before quitting the application.
+- As a user, I want to have the option of loading project collections from file when starting the application.
