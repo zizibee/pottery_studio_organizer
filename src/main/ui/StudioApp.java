@@ -2,20 +2,36 @@ package ui;
 
 import model.CeramicProject;
 import model.CeramicProjectList;
+import model.Studio;
+import org.json.JSONObject;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // Code based off of Teller application example (TellerApp class)
+// and WorkRoomApp class from JsonSerializationDemo example application
 
 // Studio organizer application
 public class StudioApp {
+    private static final String JSON_STORE = "./data/studio.json";
+    private Studio studio;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
     private CeramicProjectList inProgressProjects;
     private CeramicProjectList finishedProjects;
     private Scanner input;
 
-    // EFFECTS: run the studio application
+    // EFFECTS: constructs studio and runs the studio application
     public StudioApp() {
+        input = new Scanner(System.in);
+        studio = new Studio("Your studio");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runStudio();
     }
 
@@ -25,6 +41,7 @@ public class StudioApp {
     private void runStudio() {
         boolean keepRunning = true;
         String userInput;
+        input = new Scanner(System.in);
 
         init();
         System.out.println("\nWelcome to your pottery studio organizer!");
@@ -71,6 +88,10 @@ public class StudioApp {
             case "v":
                 viewProjects();
                 break;
+            case "f":
+                saveStudioToFile();
+            case "l":
+                loadStudioFromFile();
             default:
                 System.out.println("Invalid selection.");
                 break;
@@ -95,6 +116,8 @@ public class StudioApp {
         System.out.println("\tg -> receive project firing grouping suggestion");
         System.out.println("\tu -> update a project");
         System.out.println("\tv -> view a project collection");
+        System.out.println("\tf -> save your studio's projects to file");
+        System.out.println("\tl -> load your studio's projects from file");
         System.out.println("\tq -> quit studio organizer");
     }
 
@@ -106,15 +129,11 @@ public class StudioApp {
 
         String selectedClayType = selectClayType();
         String selectedStage = selectStage();
+        String nextStep = null;
 
-        CeramicProject newProject = new CeramicProject(title, selectedClayType, selectedStage);
+        CeramicProject newProject = new CeramicProject(title, selectedClayType, selectedStage, nextStep);
         CeramicProjectList selectedList = selectList();
-        String listMessage;
-        if (selectedList == inProgressProjects) {
-            listMessage = "in-progress";
-        } else {
-            listMessage = "finished";
-        }
+        String listMessage = chooseListMessage(selectedList);
 
         int initialLength = selectedList.length();
         selectedList.addProject(newProject);
@@ -127,7 +146,18 @@ public class StudioApp {
                     + " project collection.");
             if (selectedList == finishedProjects) {
                 newProject.finish();
+                nextStep = "NONE";
             }
+            studio.addProject(new CeramicProject(title, selectedClayType, selectedStage, nextStep));
+        }
+    }
+
+    // EFFECTS: returns a string of the type of given ceramic project list
+    private String chooseListMessage(CeramicProjectList selectedList) {
+        if (selectedList == inProgressProjects) {
+            return "in-progress";
+        } else {
+            return "finished";
         }
     }
 
@@ -218,6 +248,29 @@ public class StudioApp {
             inProgressProjects.removeProject(found.getTitle());
         }
         printProjectReport(found);
+    }
+
+    // EFFECTS: saves the studio to file
+    private void saveStudioToFile() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(studio);
+            jsonWriter.close();
+            System.out.println("Saved " + studio.getName() + " to " + JSON_STORE + ".");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads studio from file
+    private void loadStudioFromFile() {
+        try {
+            studio = jsonReader.read();
+            System.out.println("Loaded " + studio.getName() + " from " + JSON_STORE + ".");
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
     // EFFECTS: allow user to select either c, f, or m and return selection
