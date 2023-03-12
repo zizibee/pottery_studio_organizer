@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CeramicProjectListTest {
     private CeramicProjectList testList;
     private CeramicProject testProjectOne = new CeramicProject("test 1", "porcelain",
-            "bisqueware");
+            "bisqueware", null);
     private CeramicProject testProjectTwo = new CeramicProject("test 2", "stoneware",
-            "greenware");
+            "greenware", null);
     private CeramicProject testProjectTwoA = new CeramicProject("test 2", "earthenware",
-            "glazeware");
+            "glazeware", null);
     private CeramicProject testProjectThree = new CeramicProject("test 3", "earthenware",
-            "glazeware");
+            "glazeware", null);
 
     @BeforeEach
     void setUp() {
@@ -47,7 +47,7 @@ public class CeramicProjectListTest {
         testList.addProject(testProjectOne);
         testList.addProject(testProjectTwo);
         testList.addProject(testProjectTwoA);
-        assertEquals(null, testList.getProjectFromIndex(2));
+        assertNull(testList.getProjectFromIndex(2));
         assertEquals(2, testList.length());
     }
 
@@ -66,7 +66,7 @@ public class CeramicProjectListTest {
     void testRemoveProjectDNE() {
         testList.addProject(testProjectOne);
         ArrayList<CeramicProject> result = testList.removeProject("test 2");
-        assertEquals(null, result);
+        assertNull(result);
         assertEquals(1, testList.length());
         assertEquals("test 1", testList.getProjectFromIndex(0).getTitle());
     }
@@ -84,7 +84,7 @@ public class CeramicProjectListTest {
         testList.addProject(testProjectOne);
         testList.addProject(testProjectTwo);
         CeramicProject result = testList.getProjectFromTitle("test 3");
-        assertEquals(null, result);
+        assertNull(result);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class CeramicProjectListTest {
         testList.addProject(testProjectOne);
         testList.addProject(testProjectTwo);
         CeramicProject result = testList.getProjectFromIndex(2);
-        assertEquals(null, result);
+        assertNull(result);
     }
 
     @Test
@@ -116,8 +116,8 @@ public class CeramicProjectListTest {
         testList.addProject(testProjectOne);
         testList.addProject(testProjectTwo);
         testList.addProject(testProjectThree);
-        CeramicProject testProjectFour = new CeramicProject("test 4", "stoneware", "greenware");
-        CeramicProject testProjectFive = new CeramicProject("test 5", "stoneware", "bisqueware");
+        CeramicProject testProjectFour = new CeramicProject("test 4", "stoneware", "greenware", null);
+        CeramicProject testProjectFive = new CeramicProject("test 5", "stoneware", "bisqueware", null);
         testList.addProject(testProjectFour);
         testList.addProject(testProjectFive);
 

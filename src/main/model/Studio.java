@@ -31,25 +31,23 @@ public class Studio implements Writable {
         }
     }
 
-    // EFFECTS: returns an !!!(unmodifiable) list of in-progress projects in this studio
+    // EFFECTS: returns a list of in-progress projects in this studio
     public CeramicProjectList getInProgressProjects() {
-        //return Collections.unmodifiableList(this.inProgressProjects);
         return this.inProgressProjects;
     }
 
-    // EFFECTS: returns an !!!(unmodifiable) list of in-progress projects in this studio
+    // EFFECTS: returns a list of finished projects in this studio
     public CeramicProjectList getFinishedProjects() {
-        //return Collections.unmodifiableList(this.inProgressProjects);
         return this.finishedProjects;
     }
 
     // EFFECTS: returns number of projects in this studio
-    public int numThingies() {
+    public int numProjects() {
         return inProgressProjects.length() + finishedProjects.length();
     }
 
     @Override
-    // EFFECTS: !!!
+    // EFFECTS: returns this as JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);

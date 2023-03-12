@@ -15,8 +15,8 @@ public class CeramicProjectList {
     // EFFECTS: adds given project to list if its title is not used by any other project in list
     public void addProject(CeramicProject c) {
         String title = c.getTitle();
-        for (int i = 0; i < ceramicProjectList.size(); i++) {
-            if (ceramicProjectList.get(i).getTitle().equals(title)) {
+        for (CeramicProject ceramicProject : ceramicProjectList) {
+            if (ceramicProject.getTitle().equals(title)) {
                 return;
             }
         }
@@ -47,8 +47,7 @@ public class CeramicProjectList {
 
     // EFFECTS: returns project in list with given title or null if it does not exist
     public CeramicProject getProjectFromTitle(String title) {
-        for (int i = 0; i < ceramicProjectList.size(); i++) {
-            CeramicProject c = ceramicProjectList.get(i);
+        for (CeramicProject c : ceramicProjectList) {
             if (c.getTitle().equals(title)) {
                 return c;
             }
@@ -60,8 +59,7 @@ public class CeramicProjectList {
     // EFFECTS: return a list of projects matching given clay type and next step
     public ArrayList<CeramicProject> groupForFiring(String clayType, String nextStep) {
         ArrayList<CeramicProject> group = new ArrayList<>();
-        for (int i = 0; i < ceramicProjectList.size(); i++) {
-            CeramicProject c = ceramicProjectList.get(i);
+        for (CeramicProject c : ceramicProjectList) {
             if (c.getClayType().equals(clayType) && c.getNextStep().equals(nextStep)) {
                 group.add(c);
             }

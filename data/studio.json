@@ -1,5 +1,18 @@
 {
     "finished projects": [],
-    "in-progress projects": [],
-    "name": "Your studio"
+    "in-progress projects": [
+        {
+            "stage": "bisqueware",
+            "title": "ip1",
+            "next step": "glaze fire",
+            "clay type": "earthenware"
+        },
+        {
+            "stage": "greenware",
+            "title": "ip2",
+            "next step": "bisque fire",
+            "clay type": "earthenware"
+        }
+    ],
+    "name": "your studio"
 }

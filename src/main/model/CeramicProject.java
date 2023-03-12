@@ -73,6 +73,7 @@ public class CeramicProject implements Writable {
     }
 
     @Override
+    // EFFECTS: returns this as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("title", this.title);

@@ -3,7 +3,6 @@ package ui;
 import model.CeramicProject;
 import model.CeramicProjectList;
 import model.Studio;
-import org.json.JSONObject;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -29,7 +28,7 @@ public class StudioApp {
     // EFFECTS: constructs studio and runs the studio application
     public StudioApp() {
         input = new Scanner(System.in);
-        studio = new Studio("Your studio");
+        studio = new Studio("your studio");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         runStudio();
@@ -68,6 +67,7 @@ public class StudioApp {
 
     // MODIFIES: this
     // EFFECTS: calls appropriate methods for user input based on menu legend
+    @SuppressWarnings("methodlength")
     private void processInput(String userInput) {
         switch (userInput) {
             case "a":
@@ -90,8 +90,10 @@ public class StudioApp {
                 break;
             case "f":
                 saveStudioToFile();
+                break;
             case "l":
                 loadStudioFromFile();
+                break;
             default:
                 System.out.println("Invalid selection.");
                 break;
@@ -101,8 +103,8 @@ public class StudioApp {
     // MODIFIES: this
     // EFFECTS: initialize in-progress and finished project lists and input
     private void init() {
-        inProgressProjects = new CeramicProjectList();
-        finishedProjects = new CeramicProjectList();
+        inProgressProjects = studio.getInProgressProjects();
+        finishedProjects = studio.getFinishedProjects();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -116,7 +118,7 @@ public class StudioApp {
         System.out.println("\tg -> receive project firing grouping suggestion");
         System.out.println("\tu -> update a project");
         System.out.println("\tv -> view a project collection");
-        System.out.println("\tf -> save your studio's projects to file");
+        System.out.println("\tf -> save your changes and projects to file");
         System.out.println("\tl -> load your studio's projects from file");
         System.out.println("\tq -> quit studio organizer");
     }
@@ -144,7 +146,7 @@ public class StudioApp {
         } else {
             System.out.println("Project \"" + title + "\" has been added to the " + listMessage
                     + " project collection.");
-            if (selectedList == finishedProjects) {
+            if (selectedList == studio.getFinishedProjects()) {
                 newProject.finish();
                 nextStep = "NONE";
             }
@@ -154,7 +156,7 @@ public class StudioApp {
 
     // EFFECTS: returns a string of the type of given ceramic project list
     private String chooseListMessage(CeramicProjectList selectedList) {
-        if (selectedList == inProgressProjects) {
+        if (selectedList == studio.getInProgressProjects()) {
             return "in-progress";
         } else {
             return "finished";
@@ -167,7 +169,7 @@ public class StudioApp {
     private void removeProject() {
         CeramicProjectList selectedList = selectList();
         String listMessage;
-        if (selectedList == inProgressProjects) {
+        if (selectedList == studio.getInProgressProjects()) {
             listMessage = "in-progress";
         } else {
             listMessage = "finished";
@@ -189,9 +191,9 @@ public class StudioApp {
     private void statusReport() {
         String title = enterTitle();
 
-        CeramicProject found = inProgressProjects.getProjectFromTitle(title);
+        CeramicProject found = studio.getInProgressProjects().getProjectFromTitle(title);
         if (found == null) {
-            found = finishedProjects.getProjectFromTitle(title);
+            found = studio.getFinishedProjects().getProjectFromTitle(title);
             if (found == null) {
                 System.out.println("Project not found.");
                 return;
@@ -206,7 +208,8 @@ public class StudioApp {
         String selectedClayType = selectClayType();
         String selectedNextStep = selectNextStep();
 
-        ArrayList<CeramicProject> firingGroup = inProgressProjects.groupForFiring(selectedClayType, selectedNextStep);
+        ArrayList<CeramicProject> firingGroup;
+        firingGroup = studio.getInProgressProjects().groupForFiring(selectedClayType, selectedNextStep);
 
         System.out.println("\nIn-progress " + selectedClayType + " projects that can be "
                 + selectedNextStep + "d together:");
@@ -227,7 +230,7 @@ public class StudioApp {
     private void updateProject() {
         String title = enterTitle();
 
-        CeramicProject found = inProgressProjects.getProjectFromTitle(title);
+        CeramicProject found = studio.getInProgressProjects().getProjectFromTitle(title);
         if (found == null) {
             System.out.println("Project not found in in-progress project collection.");
             return;
@@ -244,8 +247,8 @@ public class StudioApp {
         }
 
         if (found.getNextStep().equals("NONE")) {
-            finishedProjects.addProject(found);
-            inProgressProjects.removeProject(found.getTitle());
+            studio.getFinishedProjects().addProject(found);
+            studio.getInProgressProjects().removeProject(found.getTitle());
         }
         printProjectReport(found);
     }
@@ -292,7 +295,7 @@ public class StudioApp {
     private void viewProjects() {
         CeramicProjectList selected = selectList();
         String message;
-        if (selected == inProgressProjects) {
+        if (selected == studio.getInProgressProjects()) {
             message = "In-progress";
         } else {
             message = "Finished";
@@ -320,9 +323,9 @@ public class StudioApp {
         }
 
         if (selection.equals("i")) {
-            return inProgressProjects;
+            return studio.getInProgressProjects();
         } else {
-            return finishedProjects;
+            return studio.getFinishedProjects();
         }
     }
 
@@ -398,12 +401,17 @@ public class StudioApp {
     // EFFECTS: print title, clay type, stage, and next step for given project
     //          if no next steps for project, print that it is complete
     private void printProjectReport(CeramicProject c) {
-        System.out.println("\n\tProject \"" + c.getTitle() + "\" has clay type " + c.getClayType() + " and is in the "
-                + c.getStage() + " stage.");
+        CeramicProject project;
         if (c.getNextStep().equals("NONE")) {
+            project = studio.getFinishedProjects().getProjectFromTitle(c.getTitle());
+            System.out.println("\n\tProject \"" + project.getTitle() + "\" has clay type " + project.getClayType()
+                    + " and is in the " + project.getStage() + " stage.");
             System.out.println("\tProject is finished.");
         } else {
-            System.out.println("\tNext step to complete is: " + c.getNextStep() + ".");
+            project = studio.getInProgressProjects().getProjectFromTitle(c.getTitle());
+            System.out.println("\n\tProject \"" + project.getTitle() + "\" has clay type " + project.getClayType()
+                    + " and is in the " + project.getStage() + " stage.");
+            System.out.println("\tNext step to complete is: " + project.getNextStep() + ".");
         }
     }
 }

@@ -4,7 +4,6 @@ package persistence;
 
 import model.CeramicProject;
 import model.Studio;
-import ui.StudioApp;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -35,7 +34,7 @@ public class JsonReader {
     private String readFile(String sourceFile) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
         try (Stream<String> stream = Files.lines(Paths.get(sourceFile), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
         }
         return contentBuilder.toString();
     }
@@ -44,14 +43,25 @@ public class JsonReader {
     private Studio parseStudio(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Studio studio = new Studio(name);
-        addProjects(studio, jsonObject);
+        addInProgressProjects(studio, jsonObject);
+        addFinishedProjects(studio, jsonObject);
         return studio;
     }
 
     // MODIFIES: studio
-    // EFFECTS: parses projects from JSON object and adds it to studio
-    private void addProjects(Studio studio, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("projects");
+    // EFFECTS: parses in-progress projects from JSON object and adds it to studio
+    private void addInProgressProjects(Studio studio, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("in-progress projects");
+        for (Object json : jsonArray) {
+            JSONObject nextProject = (JSONObject) json;
+            addProject(studio, nextProject);
+        }
+    }
+
+    // MODIFIES: studio
+    // EFFECTS: parses finished projects from JSON object and adds it to studio
+    private void addFinishedProjects(Studio studio, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("finished projects");
         for (Object json : jsonArray) {
             JSONObject nextProject = (JSONObject) json;
             addProject(studio, nextProject);
@@ -61,11 +71,11 @@ public class JsonReader {
     // MODIFIES: studio
     // EFFECTS: parses project from JSON object and adds it to studio
     private void addProject(Studio studio, JSONObject jsonObject) {
-        String name = jsonObject.getString("title");
+        String title = jsonObject.getString("title");
         String clayType = jsonObject.getString("clay type");
         String stage = jsonObject.getString("stage");
         String nextStep = jsonObject.getString("next step");
-        CeramicProject project = new CeramicProject(name, clayType, stage, nextStep);
+        CeramicProject project = new CeramicProject(title, clayType, stage, nextStep);
         studio.addProject(project);
     }
 }

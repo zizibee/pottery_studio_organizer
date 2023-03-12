@@ -1,0 +1,23 @@
+{
+  "finished projects": [{
+    "stage": "bisqueware",
+    "title": "pFinished",
+    "next step": "NONE",
+    "clay type": "stoneware"
+  }],
+  "in-progress projects": [
+    {
+      "stage": "greenware",
+      "title": "pInProgress1",
+      "next step": "bisque fire",
+      "clay type": "earthenware"
+    },
+    {
+      "stage": "glazeware",
+      "title": "pInProgress2",
+      "next step": "post-glaze work",
+      "clay type": "porcelain"
+    }
+  ],
+  "name": "my studio"
+}

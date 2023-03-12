@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 // Tests for CeramicProject class
 class CeramicProjectTest {
     private CeramicProject testProject;
-    private CeramicProject testProjectBisque;
+    private CeramicProject testProjectBsq;
 
     @BeforeEach
     void setUp() {
-        testProject = new CeramicProject("test", "stoneware", "greenware");
-        testProjectBisque = new CeramicProject("test e", "earthenware", "bisqueware");
+        testProject = new CeramicProject("test", "stoneware", "greenware", null);
+        testProjectBsq = new CeramicProject("test e", "earthenware", "bisqueware", null);
     }
 
     @Test
@@ -26,15 +26,16 @@ class CeramicProjectTest {
 
     @Test
     void testConstructorBisqueware() {
-        assertEquals("test e", testProjectBisque.getTitle());
-        assertEquals("earthenware", testProjectBisque.getClayType());
-        assertEquals("bisqueware", testProjectBisque.getStage());
-        assertEquals("glaze fire", testProjectBisque.getNextStep());
+        assertEquals("test e", testProjectBsq.getTitle());
+        assertEquals("earthenware", testProjectBsq.getClayType());
+        assertEquals("bisqueware", testProjectBsq.getStage());
+        assertEquals("glaze fire", testProjectBsq.getNextStep());
     }
 
     @Test
     void testConstructorGlazeware() {
-        CeramicProject testProjectGlazed = new CeramicProject("test p", "porcelain", "glazeware");
+        CeramicProject testProjectGlazed;
+        testProjectGlazed = new CeramicProject("test p", "porcelain", "glazeware", null);
         assertEquals("test p", testProjectGlazed.getTitle());
         assertEquals("porcelain", testProjectGlazed.getClayType());
         assertEquals("glazeware", testProjectGlazed.getStage());
@@ -50,15 +51,15 @@ class CeramicProjectTest {
 
     @Test
     void testUpdateGlaze() {
-        testProjectBisque.update();
-        assertEquals("glazeware", testProjectBisque.getStage());
-        assertEquals("post-glaze work", testProjectBisque.getNextStep());
+        testProjectBsq.update();
+        assertEquals("glazeware", testProjectBsq.getStage());
+        assertEquals("post-glaze work", testProjectBsq.getNextStep());
     }
 
     @Test
     void testUpdatePostGlaze() {
         CeramicProject testProjectPostGlaze = new CeramicProject("test p", "porcelain",
-                "glazeware");
+                "glazeware", null);
         testProjectPostGlaze.update();
         assertEquals("glazeware", testProjectPostGlaze.getStage());
         assertEquals("NONE", testProjectPostGlaze.getNextStep());
