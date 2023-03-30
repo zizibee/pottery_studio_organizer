@@ -1,18 +1,15 @@
 {
-    "finished projects": [],
-    "in-progress projects": [
-        {
-            "stage": "bisqueware",
-            "title": "ip1",
-            "next step": "glaze fire",
-            "clay type": "earthenware"
-        },
-        {
-            "stage": "greenware",
-            "title": "ip2",
-            "next step": "bisque fire",
-            "clay type": "earthenware"
-        }
-    ],
-    "name": "your studio"
+    "finished projects": [{
+        "stage": "bisqueware",
+        "title": "p2",
+        "next step": "NONE",
+        "clay type": "earthenware"
+    }],
+    "in-progress projects": [{
+        "stage": "greenware",
+        "title": "p1",
+        "next step": "bisque fire",
+        "clay type": "stoneware"
+    }],
+    "name": "My Studio"
 }
