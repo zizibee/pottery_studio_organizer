@@ -46,3 +46,17 @@ and move a finished project to a collection of completed pieces.
 and completed projects.
 - As a user, I want to have the option of saving my project collections to file.
 - As a user, I want to have the option of loading project collections from file.
+
+## Instructions for Grader
+
+- You can generate the first required action related to adding Xs to a Y by clicking  
+*Edit* --> *Add a new project*.
+- You can generate the second required action related to adding Xs to a Y by clicking
+  *Edit* --> *Remove a project*.
+- You can locate my visual component by adding a project to the finished project collection
+and clicking the project file in the tree menu through *My Projects* 
+--> *Finished Projects* --> *(New Project Name)*.
+- You can save the state of my application by clicking  
+  *File* --> *Save current projects and changes*.
+- You can reload the state of my application by clicking  
+  *File* --> *Load previously saved projects*.

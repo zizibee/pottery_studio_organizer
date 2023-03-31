@@ -81,7 +81,7 @@ public class StudioAppGUI extends JFrame implements ActionListener {
     // EFFECTS: instantiate menu items, add action listeners for menu items, and add menu items to menu bar
     private void initializeMenu() {
         fileMenu = new JMenu("File");
-        loadFile = new JMenuItem("Load previous projects");
+        loadFile = new JMenuItem("Load previously saved projects");
         saveFile = new JMenuItem("Save current projects and changes");
 
         editMenu = new JMenu("Edit");
