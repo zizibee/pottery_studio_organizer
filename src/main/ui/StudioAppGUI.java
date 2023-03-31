@@ -215,6 +215,7 @@ public class StudioAppGUI extends JFrame implements ActionListener {
                 inProgress.add(newProjectItem);
             }
             projectTree.updateUI();
+            textPane.updateUI();
             studio.addProject(new CeramicProject(c.getTitle(), c.getClayType(), c.getStage(), nextStep));
             JOptionPane.showMessageDialog(this, "Project \"" + c.getTitle()
                     + "\" has been added to the " + listMessage + " project collection.");
@@ -281,6 +282,7 @@ public class StudioAppGUI extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Project \"" + title
                     + "\" has been removed from the " + listMessage + " project collection.");
             textPane.setText("");
+            textPane.updateUI();
         }
     }
 
@@ -312,8 +314,11 @@ public class StudioAppGUI extends JFrame implements ActionListener {
     // EFFECTS: loads studio from file, adds projects to JTree and displays completion or failure message
     private void loadStudioFromFile() {
         try {
+            CeramicProjectList previousInProgress = inProgressProjects;
+            CeramicProjectList previousFinished = finishedProjects;
             this.studio = jsonReader.read();
             initializeLists();
+            combineLists(previousInProgress, previousFinished);
             addProjectsFromFile();
             JOptionPane.showMessageDialog(this, "Loaded " + studio.getName() + " from "
                     + JSON_STORE + ".");
@@ -323,9 +328,21 @@ public class StudioAppGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
+    // EFFECTS: adds projects from previous collections state to new loaded state
+    private void combineLists(CeramicProjectList previousInProgress, CeramicProjectList previousFinished) {
+        for (int i = 0; i < previousInProgress.length(); i++) {
+            inProgressProjects.addProject(previousInProgress.getProjectFromIndex(i));
+        }
+        for (int i = 0; i < previousFinished.length(); i++) {
+            finishedProjects.addProject(previousFinished.getProjectFromIndex(i));
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: for each project collection loaded from file, go through and create nodes in appropriate tree node
-    //          and update projectTree UI
+    //          to replace previous projectTree UI
     private void addProjectsFromFile() {
+        clearPreviousProjects();
         for (int i = 0; i < inProgressProjects.length(); i++) {
             CeramicProject c = inProgressProjects.getProjectFromIndex(i);
             ProjectTreeItem projectItem = new ProjectTreeItem(c.getTitle());
@@ -337,6 +354,14 @@ public class StudioAppGUI extends JFrame implements ActionListener {
             finished.add(projectItem);
         }
         projectTree.updateUI();
+        textPane.updateUI();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes previous projects in JTree
+    private void clearPreviousProjects() {
+        inProgress.removeAllChildren();
+        finished.removeAllChildren();
     }
 
     // EFFECTS: call appropriate helper methods for items in menu bar
