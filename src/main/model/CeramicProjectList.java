@@ -5,6 +5,7 @@ import java.util.ArrayList;
 // Represents a list of ceramic projects
 public class CeramicProjectList {
     private ArrayList<CeramicProject> ceramicProjectList;
+    private EventLog log = EventLog.getInstance();
 
     // EFFECTS: ceramic project list is empty
     public CeramicProjectList() {
@@ -21,6 +22,7 @@ public class CeramicProjectList {
             }
         }
         ceramicProjectList.add(c);
+        log.logEvent(new Event("Project titled \"" + c.getTitle() + "\" added to studio."));
     }
 
     // MODIFIES: this
@@ -31,6 +33,7 @@ public class CeramicProjectList {
             CeramicProject c = ceramicProjectList.get(i);
             if (c.getTitle().equals(title)) {
                 ceramicProjectList.remove(c);
+                log.logEvent(new Event("Project titled \"" + title + "\" removed from studio."));
                 return ceramicProjectList;
             }
         }

@@ -2,6 +2,8 @@ package ui;
 
 import model.CeramicProject;
 import model.CeramicProjectList;
+import model.Event;
+import model.EventLog;
 import model.Studio;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -12,12 +14,17 @@ import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 // Studio organizer application and GUI
 public class StudioAppGUI extends JFrame implements ActionListener {
+
+    private EventLog log = EventLog.getInstance();
 
     private static final String JSON_STORE = "./data/studio.json";
     private Studio studio;
@@ -51,10 +58,19 @@ public class StudioAppGUI extends JFrame implements ActionListener {
     ImageIcon complete = new ImageIcon("./data/complete.png", "Checkmark");
 
     // MODIFIES: this
-    // EFFECTS: constructs studio frame and initializes GUI and studio application
+    // EFFECTS: constructs studio frame and initializes GUI and studio application, adds window listener
     public StudioAppGUI() {
         super("My Pottery Studio");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (Event event : log) {
+                    System.out.println(event.toString() + "\n");
+                }
+                super.windowClosing(e);
+            }
+        });
         setSize(WIDTH, HEIGHT);
         setVisible(true);
         textPane.setEditable(false);
@@ -197,7 +213,7 @@ public class StudioAppGUI extends JFrame implements ActionListener {
     private void addToProjectList(CeramicProject c) {
         String nextStep = null;
 
-        CeramicProjectList selectedList = selectList();
+        CeramicProjectList selectedList = selectList("Add my project to...");
         String listMessage = chooseListMessage(selectedList);
 
         int initialLength = selectedList.length();
@@ -235,9 +251,9 @@ public class StudioAppGUI extends JFrame implements ActionListener {
     }
 
     // EFFECTS: display popup window with project collection options, return chosen list
-    private CeramicProjectList selectList() {
+    private CeramicProjectList selectList(String message) {
         Object[] lists = {"In-progress Collection", "Finished Collection"};
-        Object selection = JOptionPane.showInputDialog(null, "Add my project to...",
+        Object selection = JOptionPane.showInputDialog(null, message,
                 "Input", JOptionPane.INFORMATION_MESSAGE, null, lists, lists[0]);
 
         if (selection.equals("In-progress Collection")) {
@@ -260,7 +276,7 @@ public class StudioAppGUI extends JFrame implements ActionListener {
     // EFFECTS: allow title to be entered by user and remove project from chosen list and display confirmation message,
     //          if project cannot be removed, display failure message
     private void removeProject() {
-        CeramicProjectList selectedList = selectList();
+        CeramicProjectList selectedList = selectList("Choose where to remove a project from:");
         DefaultMutableTreeNode selectedNode;
         String listMessage;
         if (selectedList == studio.getInProgressProjects()) {

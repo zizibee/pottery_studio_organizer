@@ -60,3 +60,16 @@ and clicking the project file in the tree menu through *My Projects*
   *File* --> *Save current projects and changes*.
 - You can reload the state of my application by clicking  
   *File* --> *Load previously saved projects*.
+
+## Phase 4: Task 2
+Mon Apr 10 17:14:53 PDT 2023
+\
+Project titled "Bowl" added to studio.
+
+Mon Apr 10 17:15:04 PDT 2023
+\
+Project titled "Plate" added to studio.
+
+Mon Apr 10 17:15:20 PDT 2023
+\
+Project titled "Bowl" removed from studio.
