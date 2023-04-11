@@ -15,7 +15,7 @@ import java.util.Scanner;
 // and WorkRoomApp class from JsonSerializationDemo example application
 
 // Studio organizer application
-public class StudioApp {
+public class ConsoleStudioApp {
     private static final String JSON_STORE = "./data/studio.json";
     private Studio studio;
     private JsonWriter jsonWriter;
@@ -26,7 +26,7 @@ public class StudioApp {
     private Scanner input;
 
     // EFFECTS: constructs studio and runs the studio application
-    public StudioApp() {
+    public ConsoleStudioApp() {
         input = new Scanner(System.in);
         studio = new Studio("your studio");
         jsonWriter = new JsonWriter(JSON_STORE);

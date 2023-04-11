@@ -19,7 +19,6 @@ import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 // Studio organizer application and GUI
 public class StudioAppGUI extends JFrame implements ActionListener {
