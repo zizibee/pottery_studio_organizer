@@ -73,3 +73,20 @@ Project titled "Plate" added to studio.
 Mon Apr 10 17:15:20 PDT 2023
 \
 Project titled "Bowl" removed from studio.
+
+## Phase 4: Task 3
+
+One part of my design that I would refactor would be the association relationships 
+between the StudioAppGUI class and the CeramicProjectList class. When making my UML class diagram,
+I noticed that StudioAppGUI has an association with Studio and an association with CeramicProjectList
+with a multiplicity of 2 (for the in-progress and finished project collections). However, Studio also
+has an association (again with a multiplicity of 2) with CeramicProjectList. So StudioAppGUI accesses
+4 CeramicProjectList instances when only 2 are needed. Therefore, I would remove StudioAppGUI's CeramicProjectList
+fields and use only the list fields from Studio. This would eliminate code that requires projects to be added to both 
+Studio and the CeramicProjectList fields.
+
+Another refactor I would do is altering the CeramicProjectList class itself. After learning about Iterator and
+the design pattern that allows classes to use a for-each loop, I realized that it would be helpful for my 
+CeramicProjectList class. In the StudioAppGUI class especially, I had to use for loops using an index. Being able to
+iterate over CeramicProjectList would have been helpful. Therefore, I would make CeramicProjectList implement
+the Iterable interface so that its CeramicProject collection could be iterated over.
