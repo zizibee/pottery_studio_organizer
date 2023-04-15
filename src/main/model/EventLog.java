@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-// Code is taken from AlarmSystem example
-
 // A class that represents a log of studio events.
 /**
  * We use the Singleton Design Pattern to ensure that there is only

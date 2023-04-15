@@ -1,7 +1,5 @@
 package persistence;
 
-// Based on JsonReader class from JsonSerializationDemo example application
-
 import model.CeramicProject;
 import model.Studio;
 

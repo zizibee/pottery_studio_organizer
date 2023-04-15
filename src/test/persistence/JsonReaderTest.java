@@ -9,8 +9,6 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Based off JsonReaderTest class in JsonSerializationDemo example application
-
 // Test class for JsonReader
 public class JsonReaderTest extends JsonTest {
 

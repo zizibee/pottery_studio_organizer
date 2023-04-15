@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Code based off of Teller application example (TellerApp class)
-// and WorkRoomApp class from JsonSerializationDemo example application
-
 // Studio organizer application
 public class ConsoleStudioApp {
     private static final String JSON_STORE = "./data/studio.json";
