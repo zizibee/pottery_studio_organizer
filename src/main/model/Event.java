@@ -3,8 +3,6 @@ package model;
 import java.util.Calendar;
 import java.util.Date;
 
-// Code is taken from AlarmSystem example
-
 // A class representing a studio event
 public class Event {
     private static final int HASH_CONSTANT = 13;
