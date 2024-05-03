@@ -77,3 +77,8 @@ the design pattern that allows classes to use a for-each loop, I realized that i
 CeramicProjectList class. In the StudioAppGUI class especially, I had to use for loops using an index. Being able to
 iterate over CeramicProjectList would have been helpful. Therefore, I would make CeramicProjectList implement
 the Iterable interface so that its CeramicProject collection could be iterated over.
+
+I would also add some functionality to edit project records after they have been created. Additionally, I would change
+my GUI to allow for users to directly drag project records from one collection into another and create their own 
+collections. Allowing for users to group projects within collections according to clay stage or type could also be 
+helpful for users when coordinating kiln fires or the pieces of students/artists in their studios. 
